@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class ProdukController extends Controller
 {
 
-    // public function __construct()
-    // {
-    //     if(!Auth::check() || Auth::user()->level != 'admin'){
-    //         abort(403);
-    //     }
-    //     session(['menu'=> 'user']);
-    // }
+    public function __construct()
+    {
+        if(!Auth::check()){
+            abort(403);
+        }
+        session(['menu'=> 'user']);
+    }
     /**
      * Display a listing of the resource.
      */

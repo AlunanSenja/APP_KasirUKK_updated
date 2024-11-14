@@ -56,7 +56,7 @@
                     <select name="level" class="form-control">
                     <option value="">--CHOOSE YA!--</option>
                     <option value="admin" {{ ($user->level === 'admin') ? 'selected' : ''}}>Administrator</option>
-                    <option value="kasir" {{ ($user->level === 'kasir') ? 'selected' : ''}}>Kasir</option>
+                    <option value="kasir" {{ ($user->level === 'petugas') ? 'selected' : ''}}>Petugas</option>
                     </select>
                 </div>
              </div>

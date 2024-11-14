@@ -12,19 +12,24 @@ use Illuminate\Support\Facades\Auth;
 class PenjualanController extends Controller
 {
     
-    // public function __construct()
-    // {
-    //     if(!Auth::check()){
-    //         abort(403);
-    //     }
-    //     session(['menu'=> 'penjualan']);
-    // }
+    public function __construct()
+    {
+        if(!Auth::check()){
+            abort(403);
+        }
+        session(['menu'=> 'penjualan']);
+    }
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
+        if (Auth::check() && Auth::user()->level === 'admin'){
+            return redirect('/login')->with('error', 'anda tidak memiliki akses ke halaman ini, silahkan login terlebih dahulu sebagai petugas');
+        }
+
         $penjualan = Penjualan::getPenjualanWithPelanggan();
         return view('penjualan.index', compact('penjualan'));
     }

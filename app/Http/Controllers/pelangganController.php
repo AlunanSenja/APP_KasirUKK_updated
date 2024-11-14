@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pelanggan;
+use Illuminate\Support\Facades\Auth;
 
 class PelangganController extends Controller
 {
+
+    public function __construct()
+    {
+        if(!Auth::check()){
+            abort(403);
+        }
+        session(['menu'=> 'pelanggan']);
+    }
     /**
      * Display a listing of the resource.
      */

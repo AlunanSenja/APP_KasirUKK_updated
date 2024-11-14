@@ -27,7 +27,7 @@
                             <a class="nav-link {{ session('menu') === 'produk' ? 'active' : ''}}" href="{{ url('/produk')}}">Data Produk</a>
                         </li>
 
-                        @if (Auth::user()->level === 'kasir')
+                        @if (Auth::user()->level === 'petugas')
                             <li class="nav-item">
                                 <a class="nav-link {{ session('menu') === 'penjualan' ? 'active' : ''}}" href="{{ url('/penjualan')}}">Data Penjualan</a>
                             </li>

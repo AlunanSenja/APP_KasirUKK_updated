@@ -8,15 +8,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // public function __construct()
-    // {
-    //     if(!Auth::check() || Auth::user()->level != 'admin'){
-    //         abort(403);
-    //     }
-    //     session(['menu'=> 'user']);
-    // }
+    public function __construct()
+    {
+        if(!Auth::check() || Auth::user()->level != 'admin'){
+           redirect('/login')->with('error', 'anda tidak memiliki akses ke halaman ini, silahkan login terlebih dahulu sebagai admin terlebih dahulu')->send();
+        }
+        session(['menu'=> 'user']);
+    }
     public function index()
     {
+
         $user = User::all();
         return view('user.index', compact('user'));
        

@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
      
-    // public function __construct()
-    // {
-    //     session(['menu' => 'dashboard']);
-    // }
+    public function __construct()
+    {
+        session(['menu' => 'dashboard']);
+    }
 
     public function index()
     {

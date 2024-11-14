@@ -41,7 +41,7 @@
                         <select class="form-select" id="level" name="level" required>
                             <option value="">--pilih--</option>
                             <option value="admin">Administrator</option>
-                            <option value="kasir">Kasir</option>
+                            <option value="petugas">Petugas</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>

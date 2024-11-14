@@ -12,13 +12,13 @@ class DetailPenjualanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function __construct()
-    // {
-    //     if (!Auth::check()) {
-    //         abort(404);
-    //     }
-    //     session(['menu' => 'penjualan']);
-    // }
+    public function __construct()
+    {
+        if (!Auth::check()) {
+            abort(404);
+        }
+        session(['menu' => 'penjualan']);
+    }
     public function index()
     {
         $detail = DetailPenjualan::getDetailPenjualanWithProduk()->whereNull('penjualan_id');
@@ -40,18 +40,34 @@ class DetailPenjualanController extends Controller
     public function store(Request $request)
     {
         
-         $request->validate([
+        $validate_data = $request->validate([
             'produk_id' => 'required',
             'jumlah_produk' => 'required',
         ]);
+        $produk = Produk::findOrFail($request->produk_id);
+        $produk->decrement('stok', $request->produk_id);
+        $stok = Produk::getStokProduk()->where('id', $produk->id);
+        
 
-         $produk = Produk::findOrFail($request->produk_id);
+        foreach($stok as $data){
+            $produk_stok = $data;
+        }
 
-         DetailPenjualan::create([
-            'produk_id' => $request->produk_id,
-            'jumlah_produk' => $request->jumlah_produk,
-            'subtotal' => ($request->jumlah_produk * $produk->harga)
-         ]);
+        $stok_awal = $produk_stok->stok;
+        $terjual = $produk_stok->terjual;
+        
+        
+        $stok_akhir = $stok_awal - $terjual;
+        
+        if($request->jumlah_produk > $stok_akhir || $request->jumlah_produk > $produk->stok)   {
+            return back()->with('message', 'jumlah dibeli melebihi jumlah stok produk');
+        }
+        
+
+        $validate_data['subtotal'] = $request->jumlah_produk * $produk->harga;
+        
+
+        DetailPenjualan::create($validate_data);
         return redirect()->route('detail.index')->with(['success' => 'berhasil menambahkan item produk']);
     }
 
